@@ -65,7 +65,7 @@ export class DroidControlService {
     this.sendCommand(cid, data, primaryChar);
   }
 
-  //TODO: this does nothing
+  //only works once deployed
   roll(direction, primaryChar) {
     let cid = 0x30; // Roll command
     // Roll command data: speed, direction (MSB), direction (LSB), state
@@ -73,7 +73,7 @@ export class DroidControlService {
     this.sendCommand(cid, data, primaryChar);
   }
 
-  //TODO: this does something weird (moves back then stops)
+  //only works once deployed
   stop(primaryChar) {
     let cid = 0x30; // Roll command
     // Roll command data: speed, direction (MSB), direction (LSB), state
