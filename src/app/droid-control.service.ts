@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BluetoothCore } from '@manekinekko/angular-web-bluetooth';
+import { Droid } from './droid';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class DroidControlService {
@@ -13,55 +15,80 @@ export class DroidControlService {
   private controlCharacteristic: string = '22bb746f-2ba1-7554-2d6f-726568705327';
   private sequence: number = 0;
 
-  controlPrimaryChar;
-
   constructor(private ble: BluetoothCore) { }
 
-  connectToDroid() {
-    this.ble.discover$({ filters: [{ namePrefix: 'BB' }], optionalServices: [this.radioService, this.controlService] })
-      .subscribe(gatt => {
-        let gattServer = gatt as BluetoothRemoteGATTServer;
-        this.ble.getPrimaryService$(gattServer, this.radioService)
-          .subscribe(radioPrimaryService => {
-            this.ble.getCharacteristic$(radioPrimaryService, this.antiDosCharacteristic)
-              .mergeMap(characteristic => {
-                let gattChar = characteristic as BluetoothRemoteGATTCharacteristic;
-                let bytes = new Uint8Array('011i3'.split('').map(c => c.charCodeAt(0)));
-                return this.ble.writeValue$(gattChar, bytes);
-              })
-              .mergeMap(_ => this.ble.getCharacteristic$(radioPrimaryService, this.txPowerCharacteristic))
-              .mergeMap(characteristic => {
-                let gattChar = characteristic as BluetoothRemoteGATTCharacteristic;
-                let array = new Uint8Array([0x07]);
-                return this.ble.writeValue$(gattChar, array);
-              })
-              .mergeMap(_ => this.ble.getCharacteristic$(radioPrimaryService, this.wakeCpuCharacteristic))
-              .mergeMap(characteristic => {
-                let gattChar = characteristic as BluetoothRemoteGATTCharacteristic;
-                let array = new Uint8Array([0x01]);
-                return this.ble.writeValue$(gattChar, array);
-              })
-              .mergeMap(_ => this.ble.getPrimaryService$(gattServer, this.controlService))
-              .mergeMap(controlPrimaryService => {
-                return this.ble.getCharacteristic$(controlPrimaryService, this.controlCharacteristic);
-              })
-              .subscribe(characteristic => {
-                let gattChar = characteristic as BluetoothRemoteGATTCharacteristic;
-                this.controlPrimaryChar = gattChar;
-                console.log('Yay connected...');
-              });
-          });
+  connectToDroid(): Observable<BluetoothRemoteGATTServer | void> {
+    return this.ble.discover$({ filters: [{ namePrefix: 'BB' }], optionalServices: [this.radioService, this.controlService] });
+  }
+
+  enableDevMode(gattServer: BluetoothRemoteGATTServer): void {
+    this.ble.getPrimaryService$(gattServer, this.radioService)
+      .subscribe(radioPrimaryService => {
+        this.ble.getCharacteristic$(radioPrimaryService, this.antiDosCharacteristic)
+          .mergeMap(characteristic => {
+            let gattChar = characteristic as BluetoothRemoteGATTCharacteristic;
+            let bytes = new Uint8Array('011i3'.split('').map(c => c.charCodeAt(0)));
+            return this.ble.writeValue$(gattChar, bytes);
+          })
+          .mergeMap(_ => this.ble.getCharacteristic$(radioPrimaryService, this.txPowerCharacteristic))
+          .mergeMap(characteristic => {
+            let gattChar = characteristic as BluetoothRemoteGATTCharacteristic;
+            let array = new Uint8Array([0x07]);
+            return this.ble.writeValue$(gattChar, array);
+          })
+          .mergeMap(_ => this.ble.getCharacteristic$(radioPrimaryService, this.wakeCpuCharacteristic))
+          .mergeMap(characteristic => {
+            let gattChar = characteristic as BluetoothRemoteGATTCharacteristic;
+            let array = new Uint8Array([0x01]);
+            return this.ble.writeValue$(gattChar, array);
+          }).subscribe(_ => console.log("Enabled Dev Mode"));
       });
   }
 
-  setColor(r, g, b) {
-    let did = 0x02; // Virtual device ID
-    let cid = 0x20; // Set RGB LED Output command
-    let data = new Uint8Array([r, g, b, 0]); // Color command data: red, green, blue, flag
-    this.sendCommand(did, cid, data);
+  getPrimaryService(gattServer): Observable<Droid> {
+    return this.ble.getPrimaryService$(gattServer, this.controlService)
+      .mergeMap(controlPrimaryService => {
+        return this.ble.getCharacteristic$(controlPrimaryService, this.controlCharacteristic);
+      })
+      .map(characteristic => {
+        let gattChar = characteristic as BluetoothRemoteGATTCharacteristic;
+        return {
+          gattServer: gattServer,
+          colorCharacteristic: gattChar,
+          movementCharacteristic: null
+        }
+      });
   }
 
-  private sendCommand(did, cid, data) {
+  setColor(r, g, b, colorChar) {
+    let cid = 0x20; // Set RGB LED Output command
+    let data = new Uint8Array([r, g, b, 0]); // Color command data: red, green, blue, flag
+    this.sendCommand(cid, data, colorChar);
+  }
+
+  roll (direction) {
+
+  }
+
+  // function roll(heading) {
+  //   console.log('Roll heading='+heading);
+  //   if (busy) {
+  //     // Return if another operation pending
+  //     return Promise.resolve();
+  //   }
+  //   busy = true;
+  //   let did = 0x02; // Virtual device ID
+  //   let cid = 0x30; // Roll command
+  //   // Roll command data: speed, heading (MSB), heading (LSB), state
+  //   let data = new Uint8Array([10, heading >> 8, heading & 0xFF, 1]);
+  //   sendCommand(did, cid, data).then(() => {
+  //     busy = false;
+  //   })
+  //   .catch(handleError);
+  // }
+
+  private sendCommand(cid, data, primaryChar) {
+    let did = 0x02;
     let seq = this.sequence & 255;
     this.sequence += 1
     // Start of packet #2
@@ -84,6 +111,6 @@ export class DroidControlService {
     array.set(data, packets.byteLength);
     array.set(checksum, packets.byteLength + data.byteLength);
 
-    this.ble.writeValue$(this.controlPrimaryChar, array).subscribe();
+    this.ble.writeValue$(primaryChar, array).subscribe();
   }
 }

@@ -1,5 +1,8 @@
 <button (click)="connectToBB8()">Connect</button>
 
-<button (click)="setColor('r')">Red</button>
-<button (click)="setColor('g')">Green</button>
-<button (click)="setColor('b')">Blue</button>
+<div *ngFor="let droid of droids">
+    <h2>{{droid.gattServer.device.name}}</h2>
+    <button (click)="setColor('r', droid)">Red</button>
+    <button (click)="setColor('g', droid)">Green</button>
+    <button (click)="setColor('b', droid)">Blue</button>
+</div>
