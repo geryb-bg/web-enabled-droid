@@ -59,14 +59,26 @@ export class DroidControlService {
       });
   }
 
-  setColor(r, g, b, colorChar) {
+  setColor(r, g, b, primaryChar) {
     let cid = 0x20; // Set RGB LED Output command
     let data = new Uint8Array([r, g, b, 0]); // Color command data: red, green, blue, flag
-    this.sendCommand(cid, data, colorChar);
+    this.sendCommand(cid, data, primaryChar);
   }
 
-  roll(direction) {
+  //TODO: this does nothing
+  roll(direction, primaryChar) {
+    let cid = 0x30; // Roll command
+    // Roll command data: speed, direction (MSB), direction (LSB), state
+    let data = new Uint8Array([10, direction >> 8, direction & 0xFF, 1]);
+    this.sendCommand(cid, data, primaryChar);
+  }
 
+  //TODO: this does something weird (moves back then stops)
+  stop(primaryChar) {
+    let cid = 0x30; // Roll command
+    // Roll command data: speed, direction (MSB), direction (LSB), state
+    let data = new Uint8Array([0, 0, 0, 0]);
+    this.sendCommand(cid, data, primaryChar);
   }
 
   // function roll(heading) {
@@ -77,9 +89,9 @@ export class DroidControlService {
   //   }
   //   busy = true;
   //   let did = 0x02; // Virtual device ID
-  //   let cid = 0x30; // Roll command
-  //   // Roll command data: speed, heading (MSB), heading (LSB), state
-  //   let data = new Uint8Array([10, heading >> 8, heading & 0xFF, 1]);
+  //   
+  //   
+  //   
   //   sendCommand(did, cid, data).then(() => {
   //     busy = false;
   //   })

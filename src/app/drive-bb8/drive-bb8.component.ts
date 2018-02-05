@@ -40,4 +40,12 @@ export class DriveBb8Component implements OnInit {
         break;
     }
   }
+
+  go(droid) {
+    this.droidControl.roll(180, droid.controlCharacteristic);
+  }
+
+  stop(droid) {
+    this.droidControl.stop(droid.controlCharacteristic);
+  }
 }
