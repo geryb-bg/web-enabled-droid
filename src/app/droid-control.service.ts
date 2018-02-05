@@ -21,10 +21,10 @@ export class DroidControlService {
     return this.ble.discover$({ filters: [{ namePrefix: 'BB' }], optionalServices: [this.radioService, this.controlService] });
   }
 
-  enableDevMode(gattServer: BluetoothRemoteGATTServer): void {
-    this.ble.getPrimaryService$(gattServer, this.radioService)
-      .subscribe(radioPrimaryService => {
-        this.ble.getCharacteristic$(radioPrimaryService, this.antiDosCharacteristic)
+  enableDevMode(gattServer: BluetoothRemoteGATTServer): Observable<void> {
+    return this.ble.getPrimaryService$(gattServer, this.radioService)
+      .mergeMap(radioPrimaryService => {
+        return this.ble.getCharacteristic$(radioPrimaryService, this.antiDosCharacteristic)
           .mergeMap(characteristic => {
             let gattChar = characteristic as BluetoothRemoteGATTCharacteristic;
             let bytes = new Uint8Array('011i3'.split('').map(c => c.charCodeAt(0)));
@@ -41,7 +41,7 @@ export class DroidControlService {
             let gattChar = characteristic as BluetoothRemoteGATTCharacteristic;
             let array = new Uint8Array([0x01]);
             return this.ble.writeValue$(gattChar, array);
-          }).subscribe(_ => console.log("Enabled Dev Mode"));
+          });
       });
   }
 
@@ -54,8 +54,7 @@ export class DroidControlService {
         let gattChar = characteristic as BluetoothRemoteGATTCharacteristic;
         return {
           gattServer: gattServer,
-          colorCharacteristic: gattChar,
-          movementCharacteristic: null
+          controlCharacteristic: gattChar
         }
       });
   }
@@ -66,7 +65,7 @@ export class DroidControlService {
     this.sendCommand(cid, data, colorChar);
   }
 
-  roll (direction) {
+  roll(direction) {
 
   }
 
