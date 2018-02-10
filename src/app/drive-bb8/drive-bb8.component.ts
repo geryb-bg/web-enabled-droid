@@ -32,11 +32,17 @@ export class DriveBb8Component implements OnInit {
 
   setColor(color, droid) {
     switch (color) {
-      case 'r': this.droidControl.setColor(250, 0, 0, droid.controlCharacteristic);
+      case 'r': 
+        this.droidControl.setColor(250, 0, 0, droid.controlCharacteristic);
+        droid.colour = "red";
         break;
-      case 'g': this.droidControl.setColor(0, 250, 0, droid.controlCharacteristic);
+      case 'g': 
+        this.droidControl.setColor(0, 250, 0, droid.controlCharacteristic);
+        droid.colour = "green";
         break;
-      case 'b': this.droidControl.setColor(0, 0, 250, droid.controlCharacteristic);
+      case 'b': 
+        this.droidControl.setColor(0, 0, 250, droid.controlCharacteristic);
+        droid.colour = "blue";
         break;
     }
   }

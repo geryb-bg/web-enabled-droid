@@ -1,0 +1,23 @@
+.connect {
+    text-align: center;
+}
+
+.droid-card {
+    max-width: 600px;
+    margin: 10px auto;
+}
+
+.blue {
+    background-color: lightskyblue;
+    border-radius: 50%;
+}
+
+.red {
+    background-color: red;
+    border-radius: 50%;
+}
+
+.green {
+    background-color: lightgreen;
+    border-radius: 50%;
+}

@@ -54,7 +54,8 @@ export class DroidControlService {
         let gattChar = characteristic as BluetoothRemoteGATTCharacteristic;
         return {
           gattServer: gattServer,
-          controlCharacteristic: gattChar
+          controlCharacteristic: gattChar,
+          colour: ''
         }
       });
   }
@@ -69,7 +70,7 @@ export class DroidControlService {
   roll(direction, primaryChar) {
     let cid = 0x30; // Roll command
     // Roll command data: speed, direction (MSB), direction (LSB), state
-    let data = new Uint8Array([10, direction >> 8, direction & 0xFF, 1]);
+    let data = new Uint8Array([50, direction >> 8, direction & 0xFF, 1]);
     this.sendCommand(cid, data, primaryChar);
   }
 
@@ -80,23 +81,6 @@ export class DroidControlService {
     let data = new Uint8Array([0, 0, 0, 0]);
     this.sendCommand(cid, data, primaryChar);
   }
-
-  // function roll(heading) {
-  //   console.log('Roll heading='+heading);
-  //   if (busy) {
-  //     // Return if another operation pending
-  //     return Promise.resolve();
-  //   }
-  //   busy = true;
-  //   let did = 0x02; // Virtual device ID
-  //   
-  //   
-  //   
-  //   sendCommand(did, cid, data).then(() => {
-  //     busy = false;
-  //   })
-  //   .catch(handleError);
-  // }
 
   private sendCommand(cid, data, primaryChar) {
     let did = 0x02;
