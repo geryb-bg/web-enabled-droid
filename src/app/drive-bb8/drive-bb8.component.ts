@@ -47,6 +47,14 @@ export class DriveBb8Component implements OnInit {
     }
   }
 
+  droidIs(stringColour, droidColour) {
+    if (stringColour === droidColour) {
+      return droidColour;
+    }
+
+    return "";
+  }
+
   move(direction, droid) {
     this.droidControl.roll(direction, droid.controlCharacteristic);
   }

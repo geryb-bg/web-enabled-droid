@@ -44,8 +44,8 @@
     </mat-card-content>
 
     <mat-card-actions>
-            <button mat-button (click)="setColor('r', droid)">Red</button>
-            <button mat-button (click)="setColor('b', droid)">Blue</button>            
-            <button mat-button (click)="setColor('g', droid)">Green</button>
+            <button mat-button (click)="setColor('r', droid)" [ngClass]="droidIs('red', droid.colour)">Red</button>
+            <button mat-button (click)="setColor('b', droid)" [ngClass]="droidIs('blue', droid.colour)">Blue</button>            
+            <button mat-button (click)="setColor('g', droid)" [ngClass]="droidIs('green', droid.colour)">Green</button>
     </mat-card-actions>
 </mat-card>
