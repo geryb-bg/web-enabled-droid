@@ -47,8 +47,8 @@ export class DriveBb8Component implements OnInit {
     }
   }
 
-  go(droid) {
-    this.droidControl.roll(180, droid.controlCharacteristic);
+  move(direction, droid) {
+    this.droidControl.roll(direction, droid.controlCharacteristic);
   }
 
   stop(droid) {

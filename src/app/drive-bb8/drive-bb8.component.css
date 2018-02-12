@@ -1,5 +1,5 @@
-.connect {
-    text-align: center;
+.bb-spacer {
+    flex: 1 1 auto;
 }
 
 .droid-card {
@@ -7,17 +7,29 @@
     margin: 10px auto;
 }
 
+.droid-image {
+    border-radius: 50%;
+    float: left;
+    width: 30%;
+}
+
 .blue {
     background-color: lightskyblue;
-    border-radius: 50%;
 }
 
 .red {
     background-color: red;
-    border-radius: 50%;
 }
 
 .green {
     background-color: lightgreen;
-    border-radius: 50%;
+}
+
+.drive-buttons {
+    float: right;
+    width: 65%;
+}
+
+.mid-button {
+    text-align: center;
 }

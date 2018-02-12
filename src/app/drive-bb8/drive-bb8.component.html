@@ -1,6 +1,10 @@
-<div class="connect">
-    <button mat-fab color="primary" (click)="connectToBB8()">Connect</button>
-</div>
+<mat-toolbar>
+    <mat-toolbar-row>
+        <span>BB-8 Driver</span>
+        <span class="bb-spacer"></span>
+        <button mat-raised-button color="primary" (click)="connectToBB8()">Connect</button>
+    </mat-toolbar-row>
+</mat-toolbar>
 
 <mat-card *ngFor="let droid of droids" class="droid-card">
     <mat-card-header>
@@ -10,10 +14,33 @@
     </mat-card-header>
 
     <mat-card-content>
-        <img src="assets/bb8.png" alt="BB-8" [class]="droid.colour">
+        <img src="assets/bb8.png" alt="BB-8" class="droid-image" [ngClass]="droid.colour">
 
-        <button mat-fab color="accent" (click)="go(droid)">GO</button>
-        <button mat-fab color="accent" (click)="stop(droid)">STOP</button>
+        <div class="drive-buttons">
+            <div class="mid-button">
+                <button mat-mini-fab (click)="move(0, droid)">
+                    <i class="material-icons">keyboard_arrow_up</i>
+                </button>
+            </div>
+            <br/><br/>
+            <div class="mid-button">
+                <button mat-mini-fab (click)="move(270, droid)" style="float: left;">
+                    <i class="material-icons">keyboard_arrow_left</i>
+                </button>
+                <button mat-fab color="warn" (click)="stop(droid)">STOP</button>
+                <button mat-mini-fab (click)="move(90, droid)" style="float: right;">
+                    <i class="material-icons">keyboard_arrow_right</i>
+                </button>
+            </div>
+            <div style="clear: both"></div>
+            <br/><br/>
+            <div class="mid-button">
+                <button mat-mini-fab (click)="move(180, droid)">
+                    <i class="material-icons">keyboard_arrow_down</i>
+                </button>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
     </mat-card-content>
 
     <mat-card-actions>
