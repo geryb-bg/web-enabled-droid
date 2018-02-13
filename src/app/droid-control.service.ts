@@ -63,7 +63,7 @@ export class DroidControlService {
   setColor(r, g, b, primaryChar) {
     let cid = 0x20; // Set RGB LED Output command
     let data = new Uint8Array([r, g, b, 0]); // Color command data: red, green, blue, flag
-    this.sendCommand(cid, data, primaryChar);
+    this.writeToChar(cid, data, primaryChar);
   }
 
   //only works once deployed
@@ -71,7 +71,7 @@ export class DroidControlService {
     let cid = 0x30; // Roll command
     // Roll command data: speed, direction (MSB), direction (LSB), state
     let data = new Uint8Array([50, direction >> 8, direction & 0xFF, 1]);
-    this.sendCommand(cid, data, primaryChar);
+    this.writeToChar(cid, data, primaryChar);
   }
 
   //only works once deployed
@@ -79,17 +79,17 @@ export class DroidControlService {
     let cid = 0x30; // Roll command
     // Roll command data: speed, direction (MSB), direction (LSB), state
     let data = new Uint8Array([0, 0, 0, 0]);
-    this.sendCommand(cid, data, primaryChar);
+    this.writeToChar(cid, data, primaryChar);
   }
 
-  private sendCommand(cid, data, primaryChar) {
+  private writeToChar(cid, data, primaryChar) {
     let did = 0x02;
     let seq = this.sequence & 255;
     this.sequence += 1
     // Start of packet #2
-    let sop2 = 0xfc;
-    sop2 |= 1; // Answer
-    sop2 |= 2; // Reset timeout
+    let sop2 = 0xfc; //252
+    sop2 |= 1; // Answer //253
+    sop2 |= 2; // Reset timeout //255
     // Data length
     let dlen = data.byteLength + 1;
     let sum = data.reduce((a, b) => {
