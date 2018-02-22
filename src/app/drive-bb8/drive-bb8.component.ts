@@ -12,10 +12,10 @@ export class DriveBb8Component implements OnInit {
   droids: Droid[];
 
   constructor(private droidControl: DroidControlService) {
-    this.droids = [];
   }
 
   ngOnInit() {
+    this.droids = [];
   }
 
   connectToBB8() {

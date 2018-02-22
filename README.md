@@ -1,27 +1,21 @@
 # WebEnabledDroid
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.5.
+You can check out the result on firebase: https://droid-hack.firebaseapp.com/
 
-## Development server
+## BB-8 app-enabled droid with Angular Web Bluetooth Module
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Using the angular bluetooth module created by [manekinekko](https://github.com/manekinekko/angular-web-bluetooth).
 
-## Code scaffolding
+## References
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. [Exploring the Physical Web](https://medium.com/@urish/exploring-the-physical-web-without-buying-beacons-efae51e36c2e)
+2. [Is Now a Good Time to Start using Web Bluetooth?](https://medium.com/@urish/is-now-a-good-time-to-start-using-web-bluetooth-hint-yes-yes-it-is-99e998d7b9f6)
+2. [The Physical Web](https://google.github.io/physical-web/)
+3. [Web Bluetooth](https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web)
+4. [The Web Bluetooth module for Angular](https://medium.com/google-developer-experts/the-web-bluetooth-module-for-angular-9336c9535d04)
+5. [Web Bluetooth Community Group](https://github.com/WebBluetoothCG)
+6. [Sphero API Docs](https://github.com/orbotix/DeveloperResources/blob/master/docs/Sphero_API_1.50.pdf)
 
-## Build
+## Talk References
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- DevConf 2018 - Watch this space...
