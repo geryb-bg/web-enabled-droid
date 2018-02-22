@@ -78,7 +78,7 @@ export class DroidControlService {
   roll(direction: number, primaryChar: BluetoothRemoteGATTCharacteristic) {
     let cid = 0x30; // Roll command
     // Roll command data: speed, direction (MSB), direction (LSB), state
-    let data = new Uint8Array([50, direction >> 8, direction & 0xFF, 1]);
+    let data = new Uint8Array([100, direction >> 8, direction & 0xFF, 1]);
     this.writeToChar(cid, data, primaryChar);
   }
 
