@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DroidControlService } from '../droid-control.service';
-import { Droid } from '../droid';
+
+import { Droid } from '../../lib/droid';
 
 @Component({
   selector: 'app-drive-bb8',
@@ -10,6 +11,7 @@ import { Droid } from '../droid';
 export class DriveBb8Component implements OnInit {
 
   droids: Droid[];
+  speed: number = 100;
 
   constructor(private droidControl: DroidControlService) {
   }
@@ -19,29 +21,23 @@ export class DriveBb8Component implements OnInit {
   }
 
   connectToBB8() {
-    this.droidControl.connectToDroid().subscribe(gatt => {
-      let gattServer = gatt as BluetoothRemoteGATTServer;
-      this.droidControl.enableDevMode(gattServer).subscribe(_ => {
-        this.droidControl.getPrimaryService(gattServer).subscribe((droid) => {
-          this.droids.push(droid);
-          console.log("connected");
-        });
-      });
+    this.droidControl.connectToDroid().then(droid => {
+      this.droids.push(droid);
     });
   }
 
   setColor(color, droid) {
     switch (color) {
       case 'r': 
-        this.droidControl.setColor(250, 0, 0, droid.controlCharacteristic);
+        droid.setColour(255, 0, 0);
         droid.colour = "red";
         break;
       case 'g': 
-        this.droidControl.setColor(0, 250, 0, droid.controlCharacteristic);
+        droid.setColour(0, 255, 0);
         droid.colour = "green";
         break;
       case 'b': 
-        this.droidControl.setColor(0, 0, 250, droid.controlCharacteristic);
+        droid.setColour(0, 0, 255);
         droid.colour = "blue";
         break;
     }
@@ -56,10 +52,10 @@ export class DriveBb8Component implements OnInit {
   }
 
   move(direction, droid) {
-    this.droidControl.roll(direction, droid.controlCharacteristic);
+    droid.roll(this.speed, direction);
   }
 
   stop(droid) {
-    this.droidControl.stop(droid.controlCharacteristic);
+    droid.stop();
   }
 }

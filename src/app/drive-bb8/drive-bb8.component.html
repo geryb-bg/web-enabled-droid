@@ -9,7 +9,7 @@
 <mat-card *ngFor="let droid of droids" class="droid-card">
     <mat-card-header>
         <i mat-card-avatar class="material-icons">bluetooth_connected</i>
-        <mat-card-title>{{droid.gattServer.device.name}}</mat-card-title>
+        <mat-card-title>{{droid.gattProfile.device.name}}</mat-card-title>
         <mat-card-subtitle>Connected</mat-card-subtitle>
     </mat-card-header>
 
@@ -44,8 +44,8 @@
     </mat-card-content>
 
     <mat-card-actions>
-            <button mat-button (click)="setColor('r', droid)" [ngClass]="droidIs('red', droid.colour)">Red</button>
-            <button mat-button (click)="setColor('b', droid)" [ngClass]="droidIs('blue', droid.colour)">Blue</button>            
-            <button mat-button (click)="setColor('g', droid)" [ngClass]="droidIs('green', droid.colour)">Green</button>
+            <button mat-button (click)="setColor('r', droid)" [ngClass]="droidIs('red', droid)">Red</button>
+            <button mat-button (click)="setColor('b', droid)" [ngClass]="droidIs('blue', droid)">Blue</button>            
+            <button mat-button (click)="setColor('g', droid)" [ngClass]="droidIs('green', droid)">Green</button>
     </mat-card-actions>
 </mat-card>
