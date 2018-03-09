@@ -40,7 +40,11 @@
                 </button>
             </div>
         </div>
-        <div style="clear: both;"></div>
+        <div style="clear: both;">
+            <br/>
+            <br/>
+            <mat-slider [(ngModel)]="speed" class="speed-slide" max="250" min="20" step="5" thumbLabel tickInterval="1"></mat-slider>
+        </div>
     </mat-card-content>
 
     <mat-card-actions>
