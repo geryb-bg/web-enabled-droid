@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BluetoothCore } from '@manekinekko/angular-web-bluetooth';
 import { Observable } from 'rxjs/Observable';
 
 import { Droid } from '../lib/droid';

@@ -37,3 +37,7 @@
 .speed-slide {
     width: 100%;
 }
+
+.col-button {
+    min-width: 60px;
+}

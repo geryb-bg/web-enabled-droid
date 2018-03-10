@@ -11,7 +11,8 @@ import { Droid } from '../../lib/droid';
 export class DriveBb8Component implements OnInit {
 
   droids: Droid[];
-  speed: number = 100;
+  speed: number = 60;
+  currDirection: number = -1;
 
   constructor(private droidControl: DroidControlService) {
   }
@@ -28,15 +29,15 @@ export class DriveBb8Component implements OnInit {
 
   setColor(color, droid) {
     switch (color) {
-      case 'r': 
+      case 'r':
         droid.setColour(255, 0, 0);
         droid.colour = "red";
         break;
-      case 'g': 
+      case 'g':
         droid.setColour(0, 255, 0);
         droid.colour = "green";
         break;
-      case 'b': 
+      case 'b':
         droid.setColour(0, 0, 255);
         droid.colour = "blue";
         break;
@@ -52,10 +53,16 @@ export class DriveBb8Component implements OnInit {
   }
 
   move(direction, droid) {
-    droid.roll(this.speed, direction);
+    if (this.currDirection !== direction) {
+      this.currDirection = direction;
+      droid.roll(this.speed, direction);
+    } else {
+      console.log("We're already going that way!!!")
+    }
   }
 
   stop(droid) {
+    this.currDirection = -1;
     droid.stop();
   }
 }
