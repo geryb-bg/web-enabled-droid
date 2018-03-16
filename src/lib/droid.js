@@ -7,6 +7,7 @@ export class Droid {
         this.gattProfile = gattProfile;
         this.controlChar = controlChar;
         this.colour = "";
+        this.currentDir = 0;
     }
 
     setColour(red, green, blue) {
@@ -16,6 +17,7 @@ export class Droid {
     }
 
     roll(speed, direction) {
+        this.currentDir = direction;
         let commandId = 0x30;
         let data = new Uint8Array([speed, direction >> 8, direction & 0xFF, 1]);
         this.writeValueToChar(commandId, data);
@@ -23,7 +25,7 @@ export class Droid {
 
     stop() {
         let commandId = 0x30;
-        let data = new Uint8Array([0, 0, 0, 0]);
+        let data = new Uint8Array([0, this.currentDir >> 8, direction & 0xFF, 0]);
         this.writeValueToChar(commandId, data);
     }
 
