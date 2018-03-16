@@ -27,7 +27,7 @@ export function connectToDroid() {
         .then(_ => droidGattProfile);
 }
 
-export function getDroid(gattProfile) {
+export function getControlChar(gattProfile) {
     return gattProfile.getPrimaryService(controlServiceUuid)
         .then(controlService => controlService.getCharacteristic(controlCharUuid))
         .then(controlChar => controlChar);
