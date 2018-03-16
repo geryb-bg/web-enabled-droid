@@ -8,15 +8,15 @@ export class DroidConnector {
     }
 
     enableDevMode() {
-        return this.getAntiDosChar()
+        return this.getantiDosChar()
             .then(this.setAntiDosValue)
-            .then(_ => this.getTxPowerChar())
+            .then(_ => this.gettxPowerChar())
             .then(this.setTxPowerValue)
-            .then(_ => this.getWakeCpuChar())
+            .then(_ => this.getwakeCpuChar())
             .then(this.setWakeCpuValue);
     }
 
-    getAntiDosChar() {
+    getantiDosChar() {
         return this.radioService.getCharacteristic(this.antiDosCharUuid);
     }
 
@@ -25,7 +25,7 @@ export class DroidConnector {
         return characteristic.writeValue(bytes);
     }
 
-    getTxPowerChar() {
+    gettxPowerChar() {
         return this.radioService.getCharacteristic(this.txPowerCharUuid);
     }
 
@@ -34,7 +34,7 @@ export class DroidConnector {
         return characteristic.writeValue(array);
     }
 
-    getWakeCpuChar() {
+    getwakeCpuChar() {
         return this.radioService.getCharacteristic(this.wakeCpuCharUuid);
     }
 

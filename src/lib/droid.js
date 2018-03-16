@@ -11,35 +11,30 @@ export class Droid {
 
     setColour(red, green, blue) {
         let commandId = 0x20;
-        let data = new Uint8Array([red, green, blue, 0]); //0 says don't save this as default colour
+        let data = new Uint8Array([red, green, blue, 0]);
         this.writeValueToChar(commandId, data);
     }
 
     roll(speed, direction) {
         let commandId = 0x30;
-        // Roll command data: speed, direction (MSB), direction (LSB), 1=go
-        let msb = direction >> 8;
-        let lsb = direction & 0xFF;
-        let data = new Uint8Array([speed, msb, lsb, 1]);
+        let data = new Uint8Array([speed, direction >> 8, direction & 0xFF, 1]);
         this.writeValueToChar(commandId, data);
     }
 
     stop() {
         let commandId = 0x30;
-        let data = new Uint8Array([0, 0, 0, 0]); //0=stop
+        let data = new Uint8Array([0, 0, 0, 0]);
         this.writeValueToChar(commandId, data);
     }
 
     writeValueToChar(commandId, data) {
-        const deviceId = 0x02; //virtual device, 2 is for sphero features (roll, colour, etc)
+        const deviceId = 0x02;
         const dataLength = data.byteLength + 1;
 
-        const sum = data.reduce((a, b) => {
-            return a + b;
-        });
-
+        const sum = data.reduce((a,b) => a+b);
+        
         const seq = this.sequence & 255;
-        this.sequence += 1
+        this.sequence += 1;
 
         let chk = (sum + deviceId + commandId + seq + dataLength) & 255;
         chk ^= 255;
