@@ -10,18 +10,6 @@ export class Droid {
         this.currentDir = 0;
     }
 
-    setHeading(heading) {
-        let commandId1 = 0x30;
-        let data1 = new Uint8Array([0, heading >> 8, heading & 0xFF, 0]);
-        return this.writeValueToChar(commandId1, data1).then(_ => {
-            setTimeout(_ => {
-                let commandId = 0x01;
-                let data = new Uint16Array([0]);
-                return this.writeValueToChar(commandId, data);
-            }, 100)
-        });
-    }
-
     setColour(red, green, blue) {
         let commandId = 0x20;
         let data = new Uint8Array([red, green, blue, 0]);
@@ -39,6 +27,18 @@ export class Droid {
         let commandId = 0x30;
         let data = new Uint8Array([0, this.currentDir >> 8, this.currentDir & 0xFF, 0]);
         return this.writeValueToChar(commandId, data);
+    }
+
+    setHeading(heading) {
+        let commandId1 = 0x30;
+        let data1 = new Uint8Array([0, heading >> 8, heading & 0xFF, 0]);
+        return this.writeValueToChar(commandId1, data1).then(_ => {
+            setTimeout(_ => {
+                let commandId = 0x01;
+                let data = new Uint16Array([0]);
+                return this.writeValueToChar(commandId, data);
+            }, 100)
+        });
     }
 
     writeValueToChar(commandId, data) {
