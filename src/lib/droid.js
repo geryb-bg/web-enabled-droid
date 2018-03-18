@@ -10,31 +10,43 @@ export class Droid {
         this.currentDir = 0;
     }
 
+    setHeading(heading) {
+        let commandId1 = 0x30;
+        let data1 = new Uint8Array([0, heading >> 8, heading & 0xFF, 0]);
+        return this.writeValueToChar(commandId1, data1).then(_ => {
+            setTimeout(_ => {
+                let commandId = 0x01;
+                let data = new Uint16Array([0]);
+                return this.writeValueToChar(commandId, data);
+            }, 100)
+        });
+    }
+
     setColour(red, green, blue) {
         let commandId = 0x20;
         let data = new Uint8Array([red, green, blue, 0]);
-        this.writeValueToChar(commandId, data);
+        return this.writeValueToChar(commandId, data);
     }
 
     roll(speed, direction) {
         this.currentDir = direction;
         let commandId = 0x30;
         let data = new Uint8Array([speed, direction >> 8, direction & 0xFF, 1]);
-        this.writeValueToChar(commandId, data);
+        return this.writeValueToChar(commandId, data);
     }
 
     stop() {
         let commandId = 0x30;
         let data = new Uint8Array([0, this.currentDir >> 8, this.currentDir & 0xFF, 0]);
-        this.writeValueToChar(commandId, data);
+        return this.writeValueToChar(commandId, data);
     }
 
     writeValueToChar(commandId, data) {
         const deviceId = 0x02;
         const dataLength = data.byteLength + 1;
 
-        const sum = data.reduce((a,b) => a+b);
-        
+        const sum = data.reduce((a, b) => a + b);
+
         const seq = this.sequence & 255;
         this.sequence += 1;
 
@@ -49,6 +61,6 @@ export class Droid {
         array.set(data, packets.byteLength);
         array.set(checksum, packets.byteLength + data.byteLength);
 
-        this.controlChar.writeValue(array).then(_ => console.log("Command Sent!"));
+        return this.controlChar.writeValue(array);
     }
 }

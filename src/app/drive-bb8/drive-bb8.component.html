@@ -44,6 +44,7 @@
             <br/>
             <br/>
             <mat-slider [(ngModel)]="speed" class="speed-slide" max="250" min="20" step="10" thumbLabel tickInterval="1" [disabled]="currDirection >= 0"></mat-slider>
+            <button (click)="setHeading(droid)">Heading</button>
         </div>
     </mat-card-content>
 

@@ -5,6 +5,7 @@ export declare class Droid {
     colour: string;
 
     constructor(gattProfile, controlChar);
+    setHeading(heading);
     setColour(red, green, blue);
     roll(speed, direction);
     stop();

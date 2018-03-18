@@ -42,5 +42,6 @@
     - packets
     - array
 3. setColour - 0 says don't save this as default colour
-4. Roll command data: speed, direction (MSB), direction (LSB), 1=go - roll
-5. 0=stop - stop
+4. roll - Roll command data: speed, direction (MSB), direction (LSB), 1=go
+5. stop - 0=stop
+6. setHeading
