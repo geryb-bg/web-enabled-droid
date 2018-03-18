@@ -10,7 +10,7 @@
 6. setTxPowerValue
 7. getChar - wakeCpu
 8. setWakeCpuValue
-9. enableDevMode
+9. promiseenableDevMode
 
 # Now call that:
 
@@ -45,3 +45,4 @@
 4. roll - Roll command data: speed, direction (MSB), direction (LSB), 1=go
 5. stop - 0=stop
 6. setHeading
+7. /// <reference path='./types/droid.d.ts' />
