@@ -8,6 +8,7 @@ import { CustomMaterialModule } from './custom-material/custom-material.module';
 import { AppComponent } from './app.component';
 import { DriveBb8Component } from './drive-bb8/drive-bb8.component';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     CustomMaterialModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [DroidControlService],
   bootstrap: [AppComponent]

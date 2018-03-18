@@ -9,8 +9,10 @@
 
 .droid-image {
     border-radius: 50%;
-    float: left;
-    width: 30%;
+    height: 100px;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .blue {
@@ -25,13 +27,9 @@
     background-color: lightgreen;
 }
 
-.drive-buttons {
-    float: right;
-    width: 65%;
-}
-
 .mid-button {
     text-align: center;
+    padding: 15px 15px 20px;
 }
 
 .speed-slide {
