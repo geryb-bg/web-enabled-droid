@@ -7,7 +7,9 @@ export class Droid {
         this.gattProfile = gattProfile;
         this.controlChar = controlChar;
         this.colour = "";
-        this.currentDir = 0;
+        this.currentDir = -1;
+        this.speed = 60;
+        this.heading = 0;
     }
 
     setColour(red, green, blue) {
@@ -16,10 +18,10 @@ export class Droid {
         return this.writeValueToChar(commandId, data);
     }
 
-    roll(speed, direction) {
+    roll(direction) {
         this.currentDir = direction;
         let commandId = 0x30;
-        let data = new Uint8Array([speed, direction >> 8, direction & 0xFF, 1]);
+        let data = new Uint8Array([this.speed, direction >> 8, direction & 0xFF, 1]);
         return this.writeValueToChar(commandId, data);
     }
 
@@ -29,9 +31,9 @@ export class Droid {
         return this.writeValueToChar(commandId, data);
     }
 
-    setHeading(heading) {
+    setHeading() {
         let commandId1 = 0x30;
-        let data1 = new Uint8Array([0, heading >> 8, heading & 0xFF, 0]);
+        let data1 = new Uint8Array([0, this.heading >> 8, this.heading & 0xFF, 0]);
         return this.writeValueToChar(commandId1, data1).then(_ => {
             setTimeout(_ => {
                 let commandId = 0x01;

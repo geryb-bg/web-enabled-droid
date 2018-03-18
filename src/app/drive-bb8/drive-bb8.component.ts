@@ -11,9 +11,6 @@ import { Droid } from '../../lib/droid';
 export class DriveBb8Component implements OnInit {
 
   droids: Droid[];
-  speed: number = 60;
-  heading: number = 0;
-  currDirection: number = -1;
 
   constructor(private droidControl: DroidControlService) {
   }
@@ -51,23 +48,24 @@ export class DriveBb8Component implements OnInit {
   }
 
   move(direction, droid) {
-    if (this.currDirection !== direction) {
-      this.currDirection = direction;
-      droid.roll(this.speed, direction);
+    if (droid.currentDir !== direction) {
+      droid.roll(direction);
     } else {
       console.log("We're already going that way!!!")
     }
   }
 
   stop(droid) {
-    droid.stop().then(_ => {
-      this.currDirection = -1;
-    });
+    if (droid.currentDir >= 0) {
+      droid.stop().then(_ => {
+        droid.currentDir = -1;
+      });
+    }
   }
 
   setHeading(droid) {
-    droid.setHeading(this.heading).then(_ => {
-      this.heading = 0;
+    droid.setHeading().then(_ => {
+      droid.heading = 0;
     });
   }
 }
