@@ -25,7 +25,7 @@ export class Droid {
 
     stop() {
         let commandId = 0x30;
-        let data = new Uint8Array([0, this.currentDir >> 8, direction & 0xFF, 0]);
+        let data = new Uint8Array([0, this.currentDir >> 8, this.currentDir & 0xFF, 0]);
         this.writeValueToChar(commandId, data);
     }
 
