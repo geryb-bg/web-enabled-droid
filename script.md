@@ -1,3 +1,14 @@
+# Connect To Droid
+
+## connect.js:
+
+1. radioServiceUuid
+2. connectToDroid1
+3. connectToDroid2
+4. connectToDroid3
+5. connectToDroid4
+6. import DroidConnector
+
 # Enable Dev Mode:
 
 ## droid-connector.js:
@@ -11,14 +22,6 @@
 7. getChar - wakeCpu
 8. setWakeCpuValue
 9. promiseenableDevMode
-
-# Now call that:
-
-## connect.js:
-
-1. import DroidConnector
-2. radioServiceUuid
-3. connectToDroid
 
 # Get Primary Service:
 

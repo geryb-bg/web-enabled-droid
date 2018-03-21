@@ -1,7 +1,7 @@
 /// <reference path='./types/droid.d.ts' />
 
 export class Droid {
-    
+
     constructor(gattProfile, controlChar) {
         this.sequence = 0;
         this.gattProfile = gattProfile;
