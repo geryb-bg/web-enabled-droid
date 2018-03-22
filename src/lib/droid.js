@@ -3,13 +3,13 @@
 export class Droid {
 
     constructor(gattProfile, controlChar) {
-        this.sequence = 0;
         this.gattProfile = gattProfile;
         this.controlChar = controlChar;
         this.colour = "";
         this.currentDir = -1;
         this.speed = 60;
         this.heading = 0;
+        this.sequence = 0;
     }
 
     setColour(red, green, blue) {
