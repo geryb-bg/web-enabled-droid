@@ -39,7 +39,7 @@ export class Droid {
                 let commandId = 0x01;
                 let data = new Uint16Array([0]);
                 return this.writeValueToChar(commandId, data);
-            }, 100)
+            }, 1000)
         });
     }
 
