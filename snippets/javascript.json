@@ -225,7 +225,7 @@
 			"\t\t\tlet commandId = 0x01;",
 			"\t\t\tlet data = new Uint16Array([0]);",
 			"\t\t\treturn this.writeValueToChar(commandId, data);",
-			"\t\t}, 100)",
+			"\t\t}, 1000)",
 			"\t});",
 			"}"
 		],
