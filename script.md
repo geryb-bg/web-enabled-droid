@@ -2,12 +2,13 @@
 
 ## connect.js:
 
-1. radioServiceUuid
-2. connectToDroid1
-3. connectToDroid2
-4. connectToDroid3
-5. connectToDroid4
-6. import DroidConnector
+1. connectToDroid1
+2. connectToDroid2
+3. radioServiceUuid
+4. Add radioServiceUuid to optional services
+5. connectToDroid3
+6. connectToDroid4
+7. import DroidConnector
 
 # Enable Dev Mode:
 

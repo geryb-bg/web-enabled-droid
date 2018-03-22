@@ -1,20 +1,4 @@
 {
-/*
-	// Place your snippets for JavaScript here. Each snippet is defined under a snippet name and has a prefix, body and 
-	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
-	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
-	// same ids are connected.
-	// Example:
-	"Print to console": {
-		"prefix": "log",
-		"body": [
-			"console.log('$1');",
-			"$2"
-		],
-		"description": "Log output to console"
-	}
-*/
-
 	"Create Droid Connector Constructor": {
 		"prefix": "connectorctor",
 		"body": [
@@ -74,7 +58,7 @@
             "\t.then(_ => this.gettxPowerChar())",
             "\t.then(this.setTxPowerValue)",
             "\t.then(_ => this.getwakeCpuChar())",
-            "\t.then(this.setWakeCpuValue);",
+            "\t.then(this.setWakeCpuValue);"
 		],
 		"description": "enableDevMode method inside"
 	},
@@ -99,7 +83,7 @@
 		"body": [
 			"return navigator.bluetooth.requestDevice({",
 			"\tfilters: [{ namePrefix: 'BB' }],",
-			"\toptionalServices: [radioServiceUuid]",
+			"\toptionalServices: []",
 			"})",
 			"\t.then(device => device.gatt.connect())"
 		],
@@ -115,7 +99,7 @@
 			".then(service => {",
 			"\t$1",	
 			"})",
-			".then(_ => droidGattProfile);",
+			".then(_ => droidGattProfile);"
 		],
 		"description": "connectToDroid get profile"
 	},
@@ -123,7 +107,7 @@
 		"prefix": "connectToDroid4",
 		"body": [
 			"const droidConnector = new DroidConnector(service);",
-			"return droidConnector.enableDevMode();",
+			"return droidConnector.enableDevMode();"
 		],
 		"description": "connectToDroid create droid connector"
 	},
@@ -150,13 +134,13 @@
 		"prefix": "droidctor",
 		"body": [
 			"constructor(gattProfile, controlChar) {",
-			"\tthis.sequence = 0;",
 			"\tthis.gattProfile = gattProfile;",
 			"\tthis.controlChar = controlChar;",
 			"\tthis.colour = \"\";",
 			"\tthis.currentDir = -1;",
 			"\tthis.speed = 60;",
-        	"\tthis.heading = 0;",
+			"\tthis.heading = 0;",
+			"\tthis.sequence = 0;",
 			"}"
 		],
 		"description": "Droid constructor"
