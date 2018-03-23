@@ -9,6 +9,11 @@ import { Droid } from '../../lib/droid';
   styleUrls: ['./drive-bb8.component.css']
 })
 export class DriveBb8Component implements OnInit {
+  private resolution = {
+    width: { exact: 1920 },
+    height: { exact: 1080 }
+  };
+  videoAdded: boolean;
 
   droids: Droid[];
 
@@ -19,9 +24,27 @@ export class DriveBb8Component implements OnInit {
     this.droids = [];
   }
 
+  addVideoElement() {
+    this.videoAdded = true;
+    const video: any = document.getElementById("video");
+
+    navigator.mediaDevices
+      .getUserMedia({ video: this.resolution, audio: false })
+      .then(function (s) {
+        video.srcObject = s;
+        video.play();
+      })
+      .catch(function (err) {
+        console.log("An error occured! " + err);
+      });
+  }
+
   connectToBB8() {
     this.droidControl.connectToDroid().then(droid => {
       this.droids.push(droid);
+      if (!this.videoAdded) {
+        this.addVideoElement();
+      }
     });
   }
 

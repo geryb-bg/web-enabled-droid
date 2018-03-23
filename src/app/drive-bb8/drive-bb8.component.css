@@ -2,9 +2,29 @@
     flex: 1 1 auto;
 }
 
+.droid-container {
+    text-align: center;
+}
+
 .droid-card {
-    max-width: 600px;
-    margin: 10px auto;
+    margin: 10px;
+    display: inline-block;
+    width: 25%;
+}
+
+.video-container {
+    width: 60%;
+    display: inline-block;
+    max-height: 440px;
+    max-width: 785px;
+}
+
+.box {
+    max-height: 440px;
+    max-width: 785px;
+    position: relative;
+    top: 22px;
+    width: 100%;
 }
 
 .droid-image {
@@ -38,4 +58,13 @@
 
 .col-button {
     min-width: 60px;
+}
+
+@media only screen and (max-width: 900px) {
+    .droid-card {
+        width: 75%;
+    }
+    .video-container {
+        width: 80%;
+    }
 }
