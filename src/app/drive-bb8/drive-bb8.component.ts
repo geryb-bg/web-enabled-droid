@@ -14,6 +14,7 @@ export class DriveBb8Component implements OnInit {
     height: { exact: 1080 }
   };
   videoAdded: boolean;
+  showVideo: boolean;
 
   droids: Droid[];
 
@@ -42,7 +43,7 @@ export class DriveBb8Component implements OnInit {
   connectToBB8() {
     this.droidControl.connectToDroid().then(droid => {
       this.droids.push(droid);
-      if (!this.videoAdded) {
+      if (this.showVideo && !this.videoAdded) {
         this.addVideoElement();
       }
     });
