@@ -13,4 +13,4 @@ You can check out the result on firebase: https://droid-hack.firebaseapp.com/
 
 ## Talk References
 
-- DevConf 2018 - Watch this space...
+- [DevConf 2018 Slides [PDF 5MB]](Slides.pdf)
