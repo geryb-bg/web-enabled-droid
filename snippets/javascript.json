@@ -1,234 +1,252 @@
 {
-	"Create Droid Connector Constructor": {
-		"prefix": "connectorctor",
-		"body": [
-			"constructor(radioService) {",
-        	"\tthis.radioService = radioService;",
-			"\tthis.antiDosCharUuid = '22bb746f-2bbd-7554-2d6f-726568705327';",
-			"\tthis.txPowerCharUuid = '22bb746f-2bb2-7554-2d6f-726568705327';",
-        	"\tthis.wakeCpuCharUuid = '22bb746f-2bbf-7554-2d6f-726568705327';",
-    		"}"
-		],
-		"description": "Create Droid Connector Constructor"
-	},
-	"getChar method": {
-		"prefix": "getChar",
-		"body": [
-			"get$1Char() {",
-        	"\treturn this.radioService.getCharacteristic(this.$1CharUuid);",
-    		"}"
-		],
-		"description": "getAntiDosChar method"
-	},
-	"setAntiDosValue method": {
-		"prefix": "setAntiDosValue",
-		"body": [
-			"setAntiDosValue(characteristic) {",
-        	"\tconst bytes = new Uint8Array('011i3'.split('').map(c => c.charCodeAt(0)));",
-        	"\treturn characteristic.writeValue(bytes);",
-    		"}"
-		],
-		"description": "setAntiDosValue method"
-	},
-	"setTxPowerValue method": {
-		"prefix": "setTxPowerValue",
-		"body": [
-			"setTxPowerValue(characteristic) {",
-        	"\tconst array = new Uint8Array([0x07]);",
-        	"\treturn characteristic.writeValue(array);",
-    		"}"
-		],
-		"description": "setTxPowerValue method"
-	},
-	"setWakeCpuValue method": {
-		"prefix": "setWakeCpuValue",
-		"body": [
-			"setWakeCpuValue(characteristic) {",
-        	"\tconst array = new Uint8Array([0x01]);",
-        	"\treturn characteristic.writeValue(array);",
-    		"}"
-		],
-		"description": "setWakeCpuValue method"
-	},
-	"enableDevMode method inside": {
-		"prefix": "promiseenableDevMode",
-		"body": [
-        	"return this.getantiDosChar()",
-            "\t.then(this.setAntiDosValue)",
-            "\t.then(_ => this.gettxPowerChar())",
-            "\t.then(this.setTxPowerValue)",
-            "\t.then(_ => this.getwakeCpuChar())",
-            "\t.then(this.setWakeCpuValue);"
-		],
-		"description": "enableDevMode method inside"
-	},
-	"Radio Service UUID": {
-		"prefix": "radioServiceUuid",
-		"body": "const radioServiceUuid = '22bb746f-2bb0-7554-2d6f-726568705327';",
-		"description": "Radio Service UUID"
-	},
-	"connectToDroid method": {
-		"prefix": "connectToDroid1",
-		"body": [
-			"export function connectToDroid() {",
-			"\tlet droidGattProfile;",
-			"\t",
-			"\t$1",
-			"}"
-		],
-		"description": "connectToDroid method"
-	},
-	"connectToDroid request device and connect": {
-		"prefix": "connectToDroid2",
-		"body": [
-			"return navigator.bluetooth.requestDevice({",
-			"\tfilters: [{ namePrefix: 'BB' }],",
-			"\toptionalServices: []",
-			"})",
-			"\t.then(device => device.gatt.connect())"
-		],
-		"description": "connectToDroid request device and connect"
-	},
-	"connectToDroid get profile": {
-		"prefix": "connectToDroid3",
-		"body": [
-			".then(gatt => {",
-			"\tdroidGattProfile = gatt;",
-			"\treturn droidGattProfile.getPrimaryService(radioServiceUuid);",
-			"})",
-			".then(service => {",
-			"\t$1",	
-			"})",
-			".then(_ => droidGattProfile);"
-		],
-		"description": "connectToDroid get profile"
-	},
-	"connectToDroid create droid connector": {
-		"prefix": "connectToDroid4",
-		"body": [
-			"const droidConnector = new DroidConnector(service);",
-			"return droidConnector.enableDevMode();"
-		],
-		"description": "connectToDroid create droid connector"
-	},
-	"Control Service and Char Uuid": {
-		"prefix": "controlUuid",
-		"body": [
-			"const controlServiceUuid = '22bb746f-2ba0-7554-2d6f-726568705327';",
-			"const controlCharUuid = '22bb746f-2ba1-7554-2d6f-726568705327';"
-		],
-		"description": "Control Service and Char Uuid"
-	},
-	"getControlChar method": {
-		"prefix": "getControlChar",
-		"body": [
-			"export function getControlChar(gattProfile) {",
-    		"\treturn gattProfile.getPrimaryService(controlServiceUuid)",
-        	"\t\t.then(controlService => controlService.getCharacteristic(controlCharUuid))",
-        	"\t\t.then(controlChar => controlChar);",
-			"}"
-		],
-		"description": "getControlChar method"
-	},
-	"Droid constructor": {
-		"prefix": "droidctor",
-		"body": [
-			"constructor(gattProfile, controlChar) {",
-			"\tthis.gattProfile = gattProfile;",
-			"\tthis.controlChar = controlChar;",
-			"\tthis.colour = \"\";",
-			"\tthis.currentDir = -1;",
-			"\tthis.speed = 60;",
-			"\tthis.heading = 0;",
-			"\tthis.sequence = 0;",
-			"}"
-		],
-		"description": "Droid constructor"
-	},
-	"writeValueToChar method": {
-		"prefix": "writeValueToChar",
-		"body": [
-			"writeValueToChar(commandId, data) {",
-			"\t$1",
-			"\t",
-			"\treturn this.controlChar.writeValue(array);",
-			"}"
-		],
-		"description": "writeValueToChar method"
-	},
-	"Checksum calculations": {
-		"prefix": "checksum",
-		"body": [
-			"let chk = (sum + deviceId + commandId + seq + dataLength) & 255;",
-			"chk ^= 255;",
-        	"let checksum = new Uint8Array([chk]);"
-		],
-		"description": "Checksum calculation"
-	},
-	"Packets": {
-		"prefix": "packets",
-		"body": "let packets = new Uint8Array([0xff, 0xff, deviceId, commandId, seq, dataLength]);",
-		"description": "Packets"
-	},
-	"Data Array": {
-		"prefix": "array",
-		"body": [
-			"let array = new Uint8Array(packets.byteLength + data.byteLength + checksum.byteLength);",
-        	"array.set(packets, 0);",
-        	"array.set(data, packets.byteLength);",
-        	"array.set(checksum, packets.byteLength + data.byteLength);"
-		],
-		"description": "Data Array"
-	},
-	"setColour method": {
-		"prefix": "setColour",
-		"body": [
-			"setColour(red, green, blue) {",
-			"\tlet commandId = 0x20;",
-			"\tlet data = new Uint8Array([red, green, blue, 0]);",
-			"\treturn this.writeValueToChar(commandId, data);",
-    		"}"
-		],
-		"description": "setColour method"
-	},
-	"roll method": {
-		"prefix": "roll",
-		"body": [
-			"roll(direction) {",
-			"\tthis.currentDir = direction;",
-			"\tlet commandId = 0x30;",
-			"\tlet data = new Uint8Array([this.speed, direction >> 8, direction & 0xFF, 1]);",
-			"\treturn this.writeValueToChar(commandId, data);",
-			"}"
-		],
-		"description": "roll method"
-	},
-	"stop method": {
-		"prefix": "stop",
-		"body": [
-			"stop() {",
-			"\tlet commandId = 0x30;",
-			"\tlet data = new Uint8Array([0, this.currentDir >> 8, this.currentDir & 0xFF, 0]);",
-			"\treturn this.writeValueToChar(commandId, data);",
-			"}"
-		],
-		"description": "stop method"
-	},
-	"setHeading method": {
-		"prefix": "setHeading",
-		"body": [
-			"setHeading() {",
-			"\tlet commandId1 = 0x30;",
-			"\tlet data1 = new Uint8Array([0, this.heading >> 8, this.heading & 0xFF, 0]);",
-			"\treturn this.writeValueToChar(commandId1, data1).then(_ => {",
-			"\t\tsetTimeout(_ => {",
-			"\t\t\tlet commandId = 0x01;",
-			"\t\t\tlet data = new Uint16Array([0]);",
-			"\t\t\treturn this.writeValueToChar(commandId, data);",
-			"\t\t}, 1000)",
-			"\t});",
-			"}"
-		],
-		"description": "setHeading method"
+		"Create Droid Connector Constructor": {
+			"prefix": "connectorctor",
+			"body": [
+				"constructor(radioService) {",
+				"\tthis.radioService = radioService;",
+				"\tthis.antiDosCharUuid = '22bb746f-2bbd-7554-2d6f-726568705327';",
+				"\tthis.txPowerCharUuid = '22bb746f-2bb2-7554-2d6f-726568705327';",
+				"\tthis.wakeCpuCharUuid = '22bb746f-2bbf-7554-2d6f-726568705327';",
+				"}"
+			],
+			"description": "Create Droid Connector Constructor"
+		},
+		"getChar method": {
+			"prefix": "getChar",
+			"body": [
+				"get$1Char() {",
+				"\treturn this.radioService.getCharacteristic(this.$1CharUuid);",
+				"}"
+			],
+			"description": "getAntiDosChar method"
+		},
+		"setAntiDosValue method": {
+			"prefix": "setAntiDosValue",
+			"body": [
+				"setAntiDosValue(characteristic) {",
+				"\tconst bytes = new Uint8Array('011i3'.split('').map(c => c.charCodeAt(0)));",
+				"\treturn characteristic.writeValue(bytes);",
+				"}"
+			],
+			"description": "setAntiDosValue method"
+		},
+		"setTxPowerValue method": {
+			"prefix": "setTxPowerValue",
+			"body": [
+				"setTxPowerValue(characteristic) {",
+				"\tconst array = new Uint8Array([0x07]);",
+				"\treturn characteristic.writeValue(array);",
+				"}"
+			],
+			"description": "setTxPowerValue method"
+		},
+		"setWakeCpuValue method": {
+			"prefix": "setWakeCpuValue",
+			"body": [
+				"setWakeCpuValue(characteristic) {",
+				"\tconst array = new Uint8Array([0x01]);",
+				"\treturn characteristic.writeValue(array);",
+				"}"
+			],
+			"description": "setWakeCpuValue method"
+		},
+		"enableDevMode method inside": {
+			"prefix": "promiseenableDevMode",
+			"body": [
+				"return this.getantiDosChar()",
+				"\t.then(this.setAntiDosValue)",
+				"\t.then(_ => this.gettxPowerChar())",
+				"\t.then(this.setTxPowerValue)",
+				"\t.then(_ => this.getwakeCpuChar())",
+				"\t.then(this.setWakeCpuValue);"
+			],
+			"description": "enableDevMode method inside"
+		},
+		"Radio Service UUID": {
+			"prefix": "radioServiceUuid",
+			"body": "const radioServiceUuid = '22bb746f-2bb0-7554-2d6f-726568705327';",
+			"description": "Radio Service UUID"
+		},
+		"connectToDroid method": {
+			"prefix": "connectToDroid1",
+			"body": [
+				"export function connectToDroid() {",
+				"\tlet droidGattProfile;",
+				"\t",
+				"\t$1",
+				"}"
+			],
+			"description": "connectToDroid method"
+		},
+		"connectToDroid request device and connect": {
+			"prefix": "connectToDroid2",
+			"body": [
+				"return navigator.bluetooth.requestDevice({",
+				"\tfilters: [{ namePrefix: 'BB' }],",
+				"\toptionalServices: []",
+				"})",
+				"\t.then(device => device.gatt.connect())"
+			],
+			"description": "connectToDroid request device and connect"
+		},
+		"connectToDroid get profile": {
+			"prefix": "connectToDroid3",
+			"body": [
+				".then(gatt => {",
+				"\tdroidGattProfile = gatt;",
+				"\treturn droidGattProfile.getPrimaryService(radioServiceUuid);",
+				"})",
+				".then(service => {",
+				"\t$1",	
+				"})",
+				".then(_ => droidGattProfile);"
+			],
+			"description": "connectToDroid get profile"
+		},
+		"connectToDroid create droid connector": {
+			"prefix": "connectToDroid4",
+			"body": [
+				"const droidConnector = new DroidConnector(service);",
+				"return droidConnector.enableDevMode();"
+			],
+			"description": "connectToDroid create droid connector"
+		},
+		"Control Service and Char Uuid": {
+			"prefix": "controlUuid",
+			"body": [
+				"const controlServiceUuid = '22bb746f-2ba0-7554-2d6f-726568705327';",
+				"const controlCharUuid = '22bb746f-2ba1-7554-2d6f-726568705327';"
+			],
+			"description": "Control Service and Char Uuid"
+		},
+		"getControlChar method": {
+			"prefix": "getControlChar",
+			"body": [
+				"export function getControlChar(gattProfile) {",
+				"\treturn gattProfile.getPrimaryService(controlServiceUuid)",
+				"\t\t.then(controlService => controlService.getCharacteristic(controlCharUuid))",
+				"\t\t.then(controlChar => controlChar);",
+				"}"
+			],
+			"description": "getControlChar method"
+		},
+		"Droid constructor": {
+			"prefix": "droidctor",
+			"body": [
+				"constructor(gattProfile, controlChar) {",
+				"\tthis.gattProfile = gattProfile;",
+				"\tthis.controlChar = controlChar;",
+				"\tthis.colour = \"\";",
+				"\tthis.currentDir = -1;",
+				"\tthis.speed = 60;",
+				"\tthis.heading = 0;",
+				"\tthis.sequence = 0;",
+				"}"
+			],
+			"description": "Droid constructor"
+		},
+		"writeValueToChar method": {
+			"prefix": "writeValueToChar",
+			"body": [
+				"writeValueToChar(commandId, data) {",
+				"\t$1",
+				"\t",
+				"\treturn this.controlChar.writeValue(array);",
+				"}"
+			],
+			"description": "writeValueToChar method"
+		},
+		"Checksum calculations": {
+			"prefix": "checksum",
+			"body": [
+				"const deviceId = 0x02;",
+				"const dataLength = data.byteLength + 1;",
+				"",
+				"const sum = data.reduce((a, b) => a + b);",
+				"",
+				"const seq = this.sequence & 255;",
+				"this.sequence += 1;",
+				"",
+				"let chk = (sum + deviceId + commandId + seq + dataLength) & 255;",
+				"chk ^= 255;",
+				"let checksum = new Uint8Array([chk]);"
+			],
+			"description": "Checksum calculation"
+		},
+		"Packets": {
+			"prefix": "packets",
+			"body": "let packets = new Uint8Array([0xff, 0xff, deviceId, commandId, seq, dataLength]);",
+			"description": "Packets"
+		},
+		"Data Array": {
+			"prefix": "array",
+			"body": [
+				"let array = new Uint8Array(packets.byteLength + data.byteLength + checksum.byteLength);",
+				"array.set(packets, 0);",
+				"array.set(data, packets.byteLength);",
+				"array.set(checksum, packets.byteLength + data.byteLength);"
+			],
+			"description": "Data Array"
+		},
+		"setColour method": {
+			"prefix": "setColour",
+			"body": [
+				"setColour(red, green, blue) {",
+				"\tlet commandId = 0x20;",
+				"\tlet data = new Uint8Array([red, green, blue, 0]);",
+				"\treturn this.writeValueToChar(commandId, data);",
+				"}"
+			],
+			"description": "setColour method"
+		},
+		"roll method": {
+			"prefix": "roll",
+			"body": [
+				"roll(direction) {",
+				"\tthis.currentDir = direction;",
+				"\tlet commandId = 0x30;",
+				"\tlet data = new Uint8Array([this.speed, direction >> 8, direction & 0xFF, 1]);",
+				"\treturn this.writeValueToChar(commandId, data);",
+				"}"
+			],
+			"description": "roll method"
+		},
+		"stop method": {
+			"prefix": "stop",
+			"body": [
+				"stop() {",
+				"\tlet commandId = 0x30;",
+				"\tlet data = new Uint8Array([0, this.currentDir >> 8, this.currentDir & 0xFF, 0]);",
+				"\treturn this.writeValueToChar(commandId, data);",
+				"}"
+			],
+			"description": "stop method"
+		},
+		"setHeading method": {
+			"prefix": "setHeading",
+			"body": [
+				"setHeading() {",
+				"\tlet commandId1 = 0x30;",
+				"\tlet data1 = new Uint8Array([0, this.heading >> 8, this.heading & 0xFF, 0]);",
+				"\treturn this.writeValueToChar(commandId1, data1).then(_ => {",
+				"\t\tsetTimeout(_ => {",
+				"\t\t\tlet commandId = 0x01;",
+				"\t\t\tlet data = new Uint16Array([0]);",
+				"\t\t\treturn this.writeValueToChar(commandId, data);",
+				"\t\t}, 1000)",
+				"\t});",
+				"}"
+			],
+			"description": "setHeading method"
+		},
+		"Types Reference": {
+			"prefix": "reference",
+			"body": "/// <reference path='./types/droid.d.ts' />",
+			"description": "Types reference"
+		},
+		"import DroidConnector": {
+			"prefix": "connectImport",
+			"body": "import { DroidConnector } from './droid-connector.js';",
+			"description": "import DroidConnector class"
+		}
 	}
-}

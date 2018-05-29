@@ -46,12 +46,12 @@ export class Droid {
     writeValueToChar(commandId, data) {
         const deviceId = 0x02;
         const dataLength = data.byteLength + 1;
-
+        
         const sum = data.reduce((a, b) => a + b);
-
+        
         const seq = this.sequence & 255;
         this.sequence += 1;
-
+        
         let chk = (sum + deviceId + commandId + seq + dataLength) & 255;
         chk ^= 255;
         let checksum = new Uint8Array([chk]);
@@ -62,7 +62,7 @@ export class Droid {
         array.set(packets, 0);
         array.set(data, packets.byteLength);
         array.set(checksum, packets.byteLength + data.byteLength);
-
+        
         return this.controlChar.writeValue(array);
     }
 }

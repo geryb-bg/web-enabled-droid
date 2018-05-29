@@ -8,7 +8,7 @@
 4. Add radioServiceUuid to optional services
 5. connectToDroid3
 6. connectToDroid4
-7. import DroidConnector
+7. connectImport
 
 # Enable Dev Mode:
 
@@ -37,11 +37,6 @@
 1. droidctor
 2. writeValueToChar:
 
-    - const deviceId = 0x02; - virtual device 2 is for sphero features
-    - const dataLength = data.byteLength + 1;
-    - const sum = data.reduce((a, b) => a + b);
-    - const seq = this.sequence & 255;
-    - this.sequence += 1
     - checksum
     - packets
     - array
@@ -49,4 +44,4 @@
 4. roll - Roll command data: speed, direction (MSB), direction (LSB), 1=go
 5. stop - 0=stop
 6. setHeading
-7. /// <reference path='./types/droid.d.ts' />
+7. reference
