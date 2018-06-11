@@ -19,6 +19,7 @@ export class DriveBb8Component implements OnInit {
   droids: Droid[];
 
   constructor(private droidControl: DroidControlService) {
+    this.showVideo = false;
   }
 
   ngOnInit() {
@@ -43,6 +44,7 @@ export class DriveBb8Component implements OnInit {
   connectToBB8() {
     this.droidControl.connectToDroid().then(droid => {
       this.droids.push(droid);
+      console.log(this.showVideo);
       if (this.showVideo && !this.videoAdded) {
         this.addVideoElement();
       }
