@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import { connectToDroid } from './lib/connect.js';
+import { connectToDroid, getControlChar } from './lib/connect.js';
 import { DroidCard } from './DroidCard.js'
 import { Button, AppBar, Toolbar, Typography } from '@material-ui/core';
+import { Droid } from './lib/droid';
 
 class App extends Component {
   state = {
-    droids: [],
-    value: 0
+    droids: []
   }
 
   connectToBb8() {
-    connectToDroid().then(droid => {
+    let gattProfile;
+
+    connectToDroid().then(gatt => {
+      gattProfile = gatt;
+      return getControlChar(gatt);
+    })
+    .then(controlChar => {
+      let droid = new Droid(gattProfile, controlChar)
       let droids = [...this.state.droids, droid];
       this.setState({ droids });
     });
@@ -26,7 +33,7 @@ class App extends Component {
             <Typography variant="h6" color="inherit" className="grow">
               BB8 Driver
             </Typography>
-            <Button color="primary" onClick={() => this.connectToBb8()}>
+            <Button variant="contained" color="primary" onClick={() => this.connectToBb8()}>
               Connect
             </Button>
           </Toolbar>
@@ -34,7 +41,7 @@ class App extends Component {
 
         <div>
           {this.state.droids.map((droid) =>
-            <DroidCard droid={droid} value={this.state.value} />
+            <DroidCard droid={droid} key={droid.gattProfile.device.name} />
           )}
         </div>
       </div>
