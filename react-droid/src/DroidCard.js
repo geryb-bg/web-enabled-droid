@@ -8,7 +8,8 @@ export class DroidCard extends Component {
         speed: 60,
         direction: 0,
         open: false,
-        invalidField: ""
+        invalidField: "",
+        droidColour: ""
     }
 
     handleChange = (event, value) => {
@@ -18,13 +19,22 @@ export class DroidCard extends Component {
     setColour = (colour, droid) => {
         switch (colour) {
             case 'r':
-                droid.setColour(255, 0, 0).then(_ => droid.colour = "red");
+                droid.setColour(255, 0, 0).then(_ => {
+                    droid.colour = "red"
+                    this.setState({droidColour: "red"})
+                });
                 break;
             case 'g':
-                droid.setColour(0, 255, 0).then(_ => droid.colour = "green");
+                droid.setColour(0, 255, 0).then(_ => {
+                    droid.colour = "green"
+                    this.setState({droidColour: "green"})
+                });
                 break;
             case 'b':
-                droid.setColour(0, 0, 255).then(_ => droid.colour = "blue");
+                droid.setColour(0, 0, 255).then(_ => {
+                    droid.colour = "blue"
+                    this.setState({droidColour: "blue"})
+                });
                 break;
         }
     }
@@ -135,9 +145,9 @@ export class DroidCard extends Component {
                         }
                     </CardContent>
                     <CardActions>
-                        <Button onClick={() => this.setColour('r', droid)}>Red</Button>
-                        <Button onClick={() => this.setColour('b', droid)}>Blue</Button>
-                        <Button onClick={() => this.setColour('g', droid)}>Green</Button>
+                        <Button onClick={() => this.setColour('r', droid)} className={this.state.droidColour === "red" ? "red-button" : ""}>Red</Button>
+                        <Button onClick={() => this.setColour('b', droid)} className={this.state.droidColour === "blue" ? "blue-button" : ""}>Blue</Button>
+                        <Button onClick={() => this.setColour('g', droid)} className={this.state.droidColour === "green" ? "green-button" : ""}>Green</Button>
                     </CardActions>
                 </Card>
                 <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
