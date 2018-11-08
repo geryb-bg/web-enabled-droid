@@ -1,5 +1,5 @@
 export class DroidConnector {
-
+    
     constructor(radioService) {
         this.radioService = radioService;
         this.antiDosCharUuid = '22bb746f-2bbd-7554-2d6f-726568705327';
