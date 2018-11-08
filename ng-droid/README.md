@@ -1,16 +1,27 @@
-# WebEnabledDroid
+# NgDroid
 
-You can check out the result on firebase: https://droid-hack.firebaseapp.com/
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.4.
 
-## References
+## Development server
 
-1. [Exploring the Physical Web](https://medium.com/@urish/exploring-the-physical-web-without-buying-beacons-efae51e36c2e)
-2. [Is Now a Good Time to Start using Web Bluetooth?](https://medium.com/@urish/is-now-a-good-time-to-start-using-web-bluetooth-hint-yes-yes-it-is-99e998d7b9f6)
-2. [The Physical Web](https://google.github.io/physical-web/)
-3. [Web Bluetooth](https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web)
-4. [Web Bluetooth Community Group](https://github.com/WebBluetoothCG)
-5. [Sphero API Docs](https://github.com/orbotix/DeveloperResources/blob/master/docs/Sphero_API_1.50.pdf)
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Talk References
+## Code scaffolding
 
-- [DevConf 2018 Slides [PDF 5MB]](Slides.pdf)
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

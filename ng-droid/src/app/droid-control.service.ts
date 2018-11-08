@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-
 import { Droid } from '../lib/droid';
-
 import { connectToDroid, getControlChar } from '../lib/connect.js';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DroidControlService {
 
   connectToDroid() {

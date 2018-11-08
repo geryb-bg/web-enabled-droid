@@ -1,15 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { DroidControlService } from './droid-control.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
-import { AppRoutingModule } from './app-routing.module';
 import { CustomMaterialModule } from './custom-material/custom-material.module';
+import { DroidControlService } from './droid-control.service';
 
 import { AppComponent } from './app.component';
 import { DriveBb8Component } from './drive-bb8/drive-bb8.component';
-import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 
 @NgModule({
   declarations: [
@@ -18,7 +16,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     CustomMaterialModule,
     FormsModule,
     BrowserAnimationsModule

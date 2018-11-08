@@ -1,61 +1,61 @@
 <mat-toolbar>
-    <mat-toolbar-row>
-        <span>BB-8 Driver</span>
-        <span class="bb-spacer"></span>
-        <mat-checkbox class="cam-toggle" [(ngModel)]="showVideo">Webcam</mat-checkbox>
-        <button mat-raised-button color="primary" (click)="connectToBB8()">Connect</button>
-    </mat-toolbar-row>
+  <mat-toolbar-row>
+      <span>BB-8 Driver</span>
+      <span class="bb-spacer"></span>
+      <mat-checkbox class="cam-toggle" [(ngModel)]="showVideo">Webcam</mat-checkbox>
+      <button mat-raised-button color="primary" (click)="connectToBB8()">Connect</button>
+  </mat-toolbar-row>
 </mat-toolbar>
 
 <div class="droid-container">
-    <mat-card *ngFor="let droid of droids" class="droid-card">
-        <mat-card-header>
-            <i mat-card-avatar class="material-icons">bluetooth_connected</i>
-            <mat-card-title>{{droid.gattProfile.device.name}}</mat-card-title>
-            <mat-card-subtitle>Connected</mat-card-subtitle>
-            <img src="assets/bb8.png" alt="BB-8" class="droid-image" [ngClass]="droid.colour">
-        </mat-card-header>
+  <mat-card *ngFor="let droid of droids" class="droid-card">
+      <mat-card-header>
+          <i mat-card-avatar class="material-icons">bluetooth_connected</i>
+          <mat-card-title>{{droid.gattProfile.device.name}}</mat-card-title>
+          <mat-card-subtitle>Connected</mat-card-subtitle>
+          <img src="assets/bb8.png" alt="BB-8" class="droid-image" [ngClass]="droid.colour">
+      </mat-card-header>
 
-        <mat-card-content>
-            <mat-tab-group>
-                <mat-tab label="Drive">
-                    <div class="mid-button">
-                        <button mat-mini-fab (click)="move(0, droid)">
-                            <i class="material-icons">keyboard_arrow_up</i>
-                        </button>
-                    </div>
-                    <div class="mid-button">
-                        <button mat-mini-fab (click)="move(270, droid)" style="float: left;">
-                            <i class="material-icons">keyboard_arrow_left</i>
-                        </button>
-                        <button mat-fab color="warn" (click)="stop(droid)">STOP</button>
-                        <button mat-mini-fab (click)="move(90, droid)" style="float: right;">
-                            <i class="material-icons">keyboard_arrow_right</i>
-                        </button>
-                    </div>
-                    <div style="clear: both"></div>
-                    <div class="mid-button">
-                        <button mat-mini-fab (click)="move(180, droid)">
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        </button>
-                    </div>
-                </mat-tab>
-                <mat-tab label="Settings" [disabled]="droid.currentDir >= 0">
-                    <h3>Speed ({{droid.speed}})</h3>
-                    <mat-slider [(ngModel)]="droid.speed" class="speed-slide" max="250" min="20" step="10" thumbLabel tickInterval="1"></mat-slider>
-                    <mat-divider></mat-divider>
-                    <h3>Direction ({{droid.heading}})</h3>
-                    <mat-slider [(ngModel)]="droid.heading" class="speed-slide" max="359" min="0" step="1" thumbLabel tickInterval="10"></mat-slider>
-                    <button mat-raised-button color="primary" (click)="setHeading(droid)">Set Direction</button>
-                </mat-tab>
-            </mat-tab-group>
-        </mat-card-content>
+      <mat-card-content>
+          <mat-tab-group>
+              <mat-tab label="Drive">
+                  <div class="mid-button">
+                      <button mat-mini-fab (click)="move(0, droid)">
+                          <i class="material-icons">keyboard_arrow_up</i>
+                      </button>
+                  </div>
+                  <div class="mid-button">
+                      <button mat-mini-fab (click)="move(270, droid)" style="float: left;">
+                          <i class="material-icons">keyboard_arrow_left</i>
+                      </button>
+                      <button mat-fab color="warn" (click)="stop(droid)">STOP</button>
+                      <button mat-mini-fab (click)="move(90, droid)" style="float: right;">
+                          <i class="material-icons">keyboard_arrow_right</i>
+                      </button>
+                  </div>
+                  <div style="clear: both"></div>
+                  <div class="mid-button">
+                      <button mat-mini-fab (click)="move(180, droid)">
+                          <i class="material-icons">keyboard_arrow_down</i>
+                      </button>
+                  </div>
+              </mat-tab>
+              <mat-tab label="Settings" [disabled]="droid.currentDir >= 0">
+                  <h3>Speed ({{droid.speed}})</h3>
+                  <mat-slider [(ngModel)]="droid.speed" class="speed-slide" max="250" min="20" step="10" thumbLabel tickInterval="1"></mat-slider>
+                  <mat-divider></mat-divider>
+                  <h3>Direction ({{droid.heading}})</h3>
+                  <mat-slider [(ngModel)]="droid.heading" class="speed-slide" max="359" min="0" step="1" thumbLabel tickInterval="10"></mat-slider>
+                  <button mat-raised-button color="primary" (click)="setHeading(droid)">Set Direction</button>
+              </mat-tab>
+          </mat-tab-group>
+      </mat-card-content>
 
-        <mat-card-actions>
-            <button mat-button (click)="setColor('r', droid)" [ngClass]="droidIs('red', droid.colour)" class="col-button">Red</button>
-            <button mat-button (click)="setColor('b', droid)" [ngClass]="droidIs('blue', droid.colour)" class="col-button">Blue</button>
-            <button mat-button (click)="setColor('g', droid)" [ngClass]="droidIs('green', droid.colour)" class="col-button">Green</button>
-        </mat-card-actions>
-    </mat-card>
-    <p class="video-container"><video id="video" class="box"></video></p>
+      <mat-card-actions>
+          <button mat-button (click)="setColor('r', droid)" [ngClass]="droidIs('red', droid.colour)" class="col-button">Red</button>
+          <button mat-button (click)="setColor('b', droid)" [ngClass]="droidIs('blue', droid.colour)" class="col-button">Blue</button>
+          <button mat-button (click)="setColor('g', droid)" [ngClass]="droidIs('green', droid.colour)" class="col-button">Green</button>
+      </mat-card-actions>
+  </mat-card>
+  <p class="video-container"><video id="video" class="box"></video></p>
 </div>

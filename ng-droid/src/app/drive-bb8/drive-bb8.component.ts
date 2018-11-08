@@ -9,6 +9,7 @@ import { Droid } from '../../lib/droid';
   styleUrls: ['./drive-bb8.component.css']
 })
 export class DriveBb8Component implements OnInit {
+
   private resolution = {
     width: { exact: 1920 },
     height: { exact: 1080 }
