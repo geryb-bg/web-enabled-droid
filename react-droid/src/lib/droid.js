@@ -1,5 +1,5 @@
 export class Droid {
-    
+
     constructor(gattProfile, controlChar) {
         this.gattProfile = gattProfile;
         this.controlChar = controlChar;
